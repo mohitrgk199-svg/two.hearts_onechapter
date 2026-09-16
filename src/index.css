@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@200;300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply font-sans antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: #ff7aa6;
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .glass-pink {
+    background: rgba(255, 169, 192, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 169, 192, 0.2);
+  }
+  .glow-pink {
+    box-shadow: 0 0 30px rgba(255, 122, 166, 0.4), 0 0 60px rgba(255, 122, 166, 0.2);
+  }
+  .glow-text {
+    text-shadow: 0 0 20px rgba(255, 122, 166, 0.5), 0 0 40px rgba(255, 122, 166, 0.2);
+  }
+  .text-shimmer {
+    background: linear-gradient(90deg, #ff7aa6, #ffc9db, #ff7aa6, #ffb3c6);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+  }
+  .perspective {
+    perspective: 1000px;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1325;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#ff7aa6, #bb2a5b);
+  border-radius: 3px;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
