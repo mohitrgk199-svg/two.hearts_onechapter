@@ -6,7 +6,7 @@ type PasswordGatewayProps = {
   onUnlock: () => void;
 };
 
-const CORRECT_PASSWORD = '21 august 2026';
+const CORRECT_PASSWORD = '21 august 2025' ;
 
 export default function PasswordGateway({ onUnlock }: PasswordGatewayProps) {
   const [input, setInput] = useState('');
