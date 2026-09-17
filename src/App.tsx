@@ -5,6 +5,7 @@ import HeartField from '@/components/HeartField';
 import Timeline from '@/components/Timeline';
 import BraceletCard from '@/components/BraceletCard';
 import Quotes from '@/components/Quotes';
+import LyricsCard from '@/components/LyricsCard';
 import Letter from '@/components/Letter';
 import NightSky from '@/components/NightSky';
 import DistanceQuotes from '@/components/DistanceQuotes';
@@ -48,6 +49,7 @@ export default function App() {
           <Timeline />
           <BraceletCard />
           <Quotes />
+          <LyricsCard />
           <Letter />
           <NightSky />
           <DistanceQuotes />
