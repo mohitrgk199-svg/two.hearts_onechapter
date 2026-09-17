@@ -6,7 +6,22 @@ type PasswordGatewayProps = {
   onUnlock: () => void;
 };
 
-const CORRECT_PASSWORD = '21.august.2025' ;
+const ACCEPTED_PASSWORDS = [
+  '21 august 2025',
+  '21august2025',
+  '21/08/2025',
+  '21-08-2025',
+  '21082025',
+];
+
+function normalizePassword(s: string): string {
+  return s.trim().toLowerCase().replace(/[\s.\-/]/g, '');
+}
+
+function isPasswordCorrect(input: string): boolean {
+  const normalized = normalizePassword(input);
+  return ACCEPTED_PASSWORDS.some((p) => normalizePassword(p) === normalized);
+}
 
 export default function PasswordGateway({ onUnlock }: PasswordGatewayProps) {
   const [input, setInput] = useState('');
@@ -21,7 +36,7 @@ export default function PasswordGateway({ onUnlock }: PasswordGatewayProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim().toLowerCase() === CORRECT_PASSWORD) {
+    if (isPasswordCorrect(input)) {
       setError(false);
       setUnlocking(true);
       setTimeout(onUnlock, 1200);
