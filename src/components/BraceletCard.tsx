@@ -1,5 +1,6 @@
 import Reveal from './Reveal';
 import { Heart } from 'lucide-react';
+import PhotoPlaceholder from './PhotoPlaceholder';
 
 export default function BraceletCard() {
   return (
@@ -52,18 +53,19 @@ export default function BraceletCard() {
               </h2>
 
               {/* Photo placeholder */}
-              <div
-                className="relative mx-auto mb-6 flex h-56 w-full max-w-xs items-center justify-center rounded-2xl overflow-hidden"
-                style={{
+              <PhotoPlaceholder
+                cardId="bracelet-card"
+                className="relative mx-auto mb-6 flex h-56 w-full max-w-xs items-center justify-center overflow-hidden"
+                containerStyle={{
                   background: 'linear-gradient(135deg, rgba(82,48,110,0.3), rgba(187,42,91,0.12))',
                   border: '1px dashed rgba(255,169,192,0.25)',
                 }}
-              >
-                <div className="text-center">
-                  <div className="text-4xl mb-2 opacity-60">📿</div>
-                  <p className="font-sans text-xs text-blush-300/50">Add the bracelet photo here</p>
-                </div>
-              </div>
+                emptyIcon="📿"
+                emptyIconClass="text-4xl mb-2 opacity-60"
+                emptyText="Add the bracelet photo here"
+                emptyTextClass="font-sans text-xs text-blush-300/50"
+                roundedClass="rounded-2xl"
+              />
 
               <p className="font-serif text-lg sm:text-xl text-white/80 italic leading-relaxed max-w-lg mx-auto">
                 A little piece of my love that stays on your wrist, reminding you every second

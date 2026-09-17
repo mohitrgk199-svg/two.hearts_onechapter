@@ -1,4 +1,5 @@
 import Reveal from './Reveal';
+import PhotoPlaceholder from './PhotoPlaceholder';
 
 const MEMORIES = [
   { date: 'Add a date', title: 'Our First Photo', message: 'Add the story behind this moment here…', tag: 'Photo' },
@@ -51,18 +52,16 @@ export default function Memories() {
               />
 
               {/* Photo placeholder */}
-              <div
-                className="relative mb-4 flex h-40 items-center justify-center overflow-hidden rounded"
-                style={{
+              <PhotoPlaceholder
+                cardId={`memories-card-${i}`}
+                className="relative mb-4 flex h-40 items-center justify-center overflow-hidden"
+                containerStyle={{
                   background: 'linear-gradient(135deg, rgba(82,48,110,0.3), rgba(187,42,91,0.15))',
                   border: '1px dashed rgba(255,169,192,0.25)',
                 }}
-              >
-                <div className="text-center">
-                  <div className="text-3xl mb-2 opacity-50">📷</div>
-                  <p className="font-sans text-[11px] text-blush-300/50">Add your photo here</p>
-                </div>
-              </div>
+                emptyIcon="📷"
+                emptyText="Add your photo here"
+              />
 
               {/* Content */}
               <div className="px-1">
