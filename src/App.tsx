@@ -4,6 +4,7 @@ import OpeningScreen from '@/components/OpeningScreen';
 import HeartField from '@/components/HeartField';
 import Timeline from '@/components/Timeline';
 import BraceletCard from '@/components/BraceletCard';
+import DressCard from '@/components/DressCard';
 import Quotes from '@/components/Quotes';
 import LyricsCard from '@/components/LyricsCard';
 import Letter from '@/components/Letter';
@@ -48,6 +49,7 @@ export default function App() {
         <main className="relative z-10">
           <Timeline />
           <BraceletCard />
+          <DressCard />
           <Quotes />
           <LyricsCard />
           <Letter />

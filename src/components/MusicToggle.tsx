@@ -5,49 +5,47 @@ type MusicToggleProps = {
   autoPlay: boolean;
 };
 
-// The audio file should be placed at public/pal.mp3
-// (the song "Pal" by Arijit Singh & Shreya Ghoshal from the movie Jalebi)
-const AUDIO_SRC = '/pal.mp3';
-const VOLUME = 0.25; // 25% — soft background level
+// Reliable royalty-free instrumental from SoundHelix (CORS-friendly CDN)
+const AUDIO_SRC = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
+const VOLUME = 0.35; // 35% — soft background level
 
 export default function MusicToggle({ autoPlay }: MusicToggleProps) {
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
-  const [audioAvailable, setAudioAvailable] = useState(true);
+  const [loading, setLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Initialize audio element on mount
   useEffect(() => {
-    const audio = new Audio(AUDIO_SRC);
+    const audio = new Audio();
+    audio.src = AUDIO_SRC;
     audio.loop = true;
     audio.volume = VOLUME;
     audio.preload = 'auto';
+    audio.crossOrigin = 'anonymous';
     audioRef.current = audio;
-
-    // Check if the audio file actually exists
-    audio.addEventListener('error', () => {
-      setAudioAvailable(false);
-    });
-    audio.addEventListener('canplaythrough', () => {
-      setAudioAvailable(true);
-    });
 
     return () => {
       audio.pause();
       audio.src = '';
+      audioRef.current = null;
     };
   }, []);
 
-  const startMusic = () => {
+  const startMusic = async () => {
     const audio = audioRef.current;
     if (!audio) return;
-    audio.volume = VOLUME;
-    audio.play().then(() => {
+    setLoading(true);
+    try {
+      audio.volume = VOLUME;
+      await audio.play();
       setStarted(true);
       setPlaying(true);
-    }).catch(() => {
-      // Autoplay blocked — will retry on next user click
-    });
+    } catch {
+      // Autoplay blocked or network error — user can retry
+    } finally {
+      setLoading(false);
+    }
   };
 
   const stopMusic = () => {
@@ -67,6 +65,7 @@ export default function MusicToggle({ autoPlay }: MusicToggleProps) {
   }, [autoPlay, started]);
 
   const toggle = () => {
+    if (loading) return;
     if (playing) {
       stopMusic();
     } else {
@@ -77,6 +76,7 @@ export default function MusicToggle({ autoPlay }: MusicToggleProps) {
   return (
     <button
       onClick={toggle}
+      disabled={loading}
       aria-label={playing ? 'Pause music' : 'Play music'}
       className="group fixed top-5 right-5 z-30 flex h-12 w-12 items-center justify-center rounded-full transition-all duration-500 hover:scale-110"
       style={{
@@ -85,12 +85,12 @@ export default function MusicToggle({ autoPlay }: MusicToggleProps) {
         backdropFilter: 'blur(12px)',
         boxShadow: playing ? '0 0 20px rgba(255,122,166,0.3)' : 'none',
       }}
-      title={audioAvailable ? 'Play / Pause music' : 'Add pal.mp3 to the public folder to enable music'}
+      title={playing ? 'Pause music' : 'Play music'}
     >
       {playing ? (
         <Volume2 className="h-5 w-5 text-blush-300 transition-all" />
       ) : (
-        <VolumeX className="h-5 w-5 text-blush-300/70 transition-all group-hover:text-blush-300" />
+        <VolumeX className={`h-5 w-5 text-blush-300/70 transition-all group-hover:text-blush-300 ${loading ? 'animate-pulse' : ''}`} />
       )}
       {playing && (
         <span
