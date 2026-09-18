@@ -153,7 +153,7 @@ function MemoryCard({
             aria-hidden="true"
           />
           <div
-            className="relative w-full max-w-sm rounded-3xl p-6"
+            className="relative w-full max-w-sm max-h-[90vh] overflow-y-auto rounded-3xl p-6"
             style={{
               background: 'rgba(42,26,61,0.95)',
               backdropFilter: 'blur(20px)',
@@ -163,11 +163,12 @@ function MemoryCard({
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-5 sticky top-0" style={{ background: 'rgba(42,26,61,0.95)', zIndex: 10, paddingBottom: '8px' }}>
               <h3 className="font-serif text-xl text-white">Edit This Memory 💗</h3>
               <button
                 onClick={() => setEditing(false)}
                 className="rounded-full p-1.5 text-blush-300/60 hover:text-white transition-colors"
+                aria-label="Close edit modal"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -216,22 +217,36 @@ function MemoryCard({
                   value={draft.message}
                   onChange={(e) => setDraft({ ...draft, message: e.target.value })}
                   placeholder="Write the story behind this moment…"
-                  rows={3}
+                  rows={4}
                   className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none resize-none"
                   style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,169,192,0.15)' }}
                 />
               </div>
 
-              <button
-                onClick={saveEdit}
-                className="w-full rounded-full py-3 font-sans text-sm font-medium text-white transition-all"
-                style={{
-                  background: 'linear-gradient(135deg, #ff7aa6, #e23f73)',
-                  boxShadow: '0 0 20px rgba(255,122,166,0.3)',
-                }}
-              >
-                Save Changes 💕
-              </button>
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => setEditing(false)}
+                  className="flex-1 rounded-full py-3 font-sans text-sm font-medium text-white/70 transition-all hover:text-white"
+                  style={{
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,169,192,0.15)',
+                  }}
+                  aria-label="Cancel edit"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={saveEdit}
+                  className="flex-1 rounded-full py-3 font-sans text-sm font-medium text-white transition-all"
+                  style={{
+                    background: 'linear-gradient(135deg, #ff7aa6, #e23f73)',
+                    boxShadow: '0 0 20px rgba(255,122,166,0.3)',
+                  }}
+                  aria-label="Save changes"
+                >
+                  Save Changes 💖
+                </button>
+              </div>
             </div>
           </div>
         </div>
