@@ -67,3 +67,17 @@
   overflow: hidden;
   height: 100vh;
 }
+
+/* Hide Bolt watermark / badge */
+ bolt-badge,
+ [class*="bolt-badge"],
+ [class*="bolt-watermark"],
+ [id*="bolt-badge"],
+ [id*="bolt-watermark"],
+ a[href*="bolt.new"][target="_blank"]:not([href*="/pricing"]):not([href*="docs"]),
+ div[class*="fixed"][class*="bottom"][class*="right"][class*="bolt"] {
+   display: none !important;
+   visibility: hidden !important;
+   opacity: 0 !important;
+   pointer-events: none !important;
+ }

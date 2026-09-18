@@ -54,13 +54,14 @@ export default function Memories() {
               {/* Photo placeholder */}
               <PhotoPlaceholder
                 cardId={`memories-card-${i}`}
-                className="relative mb-4 flex h-40 items-center justify-center overflow-hidden"
+                className="relative mb-4 flex min-h-40 items-center justify-center overflow-hidden"
                 containerStyle={{
                   background: 'linear-gradient(135deg, rgba(82,48,110,0.3), rgba(187,42,91,0.15))',
                   border: '1px dashed rgba(255,169,192,0.25)',
                 }}
                 emptyIcon="📷"
-                emptyText="Add your photo here"
+                emptyText="Add your photo/video here"
+                allowVideo
               />
 
               {/* Content */}

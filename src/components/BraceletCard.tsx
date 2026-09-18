@@ -55,7 +55,7 @@ export default function BraceletCard() {
               {/* Photo placeholder */}
               <PhotoPlaceholder
                 cardId="bracelet-card"
-                className="relative mx-auto mb-6 flex h-56 w-full max-w-xs items-center justify-center overflow-hidden"
+                className="relative mx-auto mb-6 flex min-h-56 w-full max-w-xs items-center justify-center overflow-hidden"
                 containerStyle={{
                   background: 'linear-gradient(135deg, rgba(82,48,110,0.3), rgba(187,42,91,0.12))',
                   border: '1px dashed rgba(255,169,192,0.25)',
@@ -65,6 +65,7 @@ export default function BraceletCard() {
                 emptyText="Add the bracelet photo here"
                 emptyTextClass="font-sans text-xs text-blush-300/50"
                 roundedClass="rounded-2xl"
+                allowVideo
               />
 
               <p className="font-serif text-lg sm:text-xl text-white/80 italic leading-relaxed max-w-lg mx-auto">

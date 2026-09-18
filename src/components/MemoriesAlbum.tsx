@@ -1,23 +1,25 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Plus, Trash2, X, Heart, Image as ImageIcon } from 'lucide-react';
+import { Plus, Trash2, X, Heart, Image as ImageIcon, Video as VideoIcon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
+
+type MediaType = 'image' | 'video';
 
 type Memory = {
   id: string;
   image_url: string;
   date: string;
   caption: string;
+  media_type: MediaType;
   created_at: string;
 };
-
-
 
 export default function MemoriesAlbum() {
   const [memories, setMemories] = useState<Memory[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
+  const [mediaType, setMediaType] = useState<MediaType>('image');
+  const [mediaUrl, setMediaUrl] = useState('');
   const [date, setDate] = useState('');
   const [caption, setCaption] = useState('');
   const [error, setError] = useState('');
@@ -47,7 +49,7 @@ export default function MemoriesAlbum() {
     setError('');
 
     try {
-      const fileExt = file.name.split('.').pop();
+      const fileExt = file.name.split('.').pop() || (file.type.startsWith('video/') ? 'mp4' : 'jpg');
       const fileName = `memory-${Date.now()}.${fileExt}`;
       const filePath = `memories/${fileName}`;
 
@@ -59,7 +61,7 @@ export default function MemoriesAlbum() {
         // Fallback: use file as data URL
         const reader = new FileReader();
         reader.onload = () => {
-          setImageUrl(reader.result as string);
+          setMediaUrl(reader.result as string);
           setUploading(false);
         };
         reader.readAsDataURL(file);
@@ -70,13 +72,13 @@ export default function MemoriesAlbum() {
         .from('memories')
         .getPublicUrl(filePath);
 
-      setImageUrl(urlData.publicUrl);
+      setMediaUrl(urlData.publicUrl);
       setUploading(false);
     } catch {
       // Fallback to data URL
       const reader = new FileReader();
       reader.onload = () => {
-        setImageUrl(reader.result as string);
+        setMediaUrl(reader.result as string);
         setUploading(false);
       };
       reader.readAsDataURL(file);
@@ -85,8 +87,8 @@ export default function MemoriesAlbum() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!imageUrl.trim()) {
-      setError('Please add a photo first 💗');
+    if (!mediaUrl.trim()) {
+      setError('Please add a photo or video first 💗');
       return;
     }
     if (!date.trim() || !caption.trim()) {
@@ -98,9 +100,10 @@ export default function MemoriesAlbum() {
     const { data, error: insertError } = await supabase
       .from('memories')
       .insert({
-        image_url: imageUrl.trim(),
+        image_url: mediaUrl.trim(),
         date: date.trim(),
         caption: caption.trim(),
+        media_type: mediaType,
       })
       .select()
       .single();
@@ -113,9 +116,10 @@ export default function MemoriesAlbum() {
     if (data) {
       setMemories((prev) => [data as Memory, ...prev]);
     }
-    setImageUrl('');
+    setMediaUrl('');
     setDate('');
     setCaption('');
+    setMediaType('image');
     setShowForm(false);
   };
 
@@ -131,6 +135,7 @@ export default function MemoriesAlbum() {
     image_url: m.image_url,
     date: m.date,
     caption: m.caption,
+    media_type: m.media_type || 'image',
     isSaved: true,
   }));
 
@@ -199,9 +204,52 @@ export default function MemoriesAlbum() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Photo upload */}
+              {/* Media type toggle */}
               <div>
-                <label className="block font-sans text-xs text-blush-300/70 mb-2">Photo</label>
+                <label className="block font-sans text-xs text-blush-300/70 mb-2">Media Type</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMediaType('image');
+                      setMediaUrl('');
+                    }}
+                    className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-sans transition-all ${
+                      mediaType === 'image' ? 'text-white' : 'text-blush-300/50'
+                    }`}
+                    style={{
+                      background: mediaType === 'image' ? 'rgba(255,122,166,0.2)' : 'rgba(255,255,255,0.04)',
+                      border: mediaType === 'image' ? '1px solid rgba(255,169,192,0.4)' : '1px solid rgba(255,169,192,0.1)',
+                    }}
+                  >
+                    <ImageIcon className="h-3.5 w-3.5" />
+                    Photo
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMediaType('video');
+                      setMediaUrl('');
+                    }}
+                    className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-sans transition-all ${
+                      mediaType === 'video' ? 'text-white' : 'text-blush-300/50'
+                    }`}
+                    style={{
+                      background: mediaType === 'video' ? 'rgba(255,122,166,0.2)' : 'rgba(255,255,255,0.04)',
+                      border: mediaType === 'video' ? '1px solid rgba(255,169,192,0.4)' : '1px solid rgba(255,169,192,0.1)',
+                    }}
+                  >
+                    <VideoIcon className="h-3.5 w-3.5" />
+                    Video
+                  </button>
+                </div>
+              </div>
+
+              {/* File upload */}
+              <div>
+                <label className="block font-sans text-xs text-blush-300/70 mb-2">
+                  {mediaType === 'video' ? 'Video (MP4/WebM, 20-30s)' : 'Photo'}
+                </label>
                 <div className="flex flex-col gap-3">
                   <label
                     className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-blush-400/30 py-6 text-sm text-blush-300/60 transition-all hover:border-blush-400/50 hover:text-blush-300"
@@ -210,13 +258,13 @@ export default function MemoriesAlbum() {
                       <span>Uploading…</span>
                     ) : (
                       <>
-                        <ImageIcon className="h-4 w-4" />
-                        <span>Upload from your phone</span>
+                        {mediaType === 'video' ? <VideoIcon className="h-4 w-4" /> : <ImageIcon className="h-4 w-4" />}
+                        <span>Upload from your {mediaType === 'video' ? 'phone' : 'phone'}</span>
                       </>
                     )}
                     <input
                       type="file"
-                      accept="image/*"
+                      accept={mediaType === 'video' ? 'video/mp4,video/webm' : 'image/*'}
                       className="hidden"
                       onChange={(e) => {
                         const file = e.target.files?.[0];
@@ -224,11 +272,11 @@ export default function MemoriesAlbum() {
                       }}
                     />
                   </label>
-                  <div className="text-center text-blush-300/40 text-xs">or paste an image URL below</div>
+                  <div className="text-center text-blush-300/40 text-xs">or paste a {mediaType === 'video' ? 'video' : 'image'} URL below</div>
                   <input
                     type="url"
-                    value={imageUrl.startsWith('data:') ? '' : imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
+                    value={mediaUrl.startsWith('data:') ? '' : mediaUrl}
+                    onChange={(e) => setMediaUrl(e.target.value)}
                     placeholder="https://…"
                     className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 outline-none"
                     style={{
@@ -236,9 +284,13 @@ export default function MemoriesAlbum() {
                       border: '1px solid rgba(255,169,192,0.15)',
                     }}
                   />
-                  {imageUrl && (
+                  {mediaUrl && (
                     <div className="mx-auto h-24 w-full max-w-[200px] overflow-hidden rounded-lg">
-                      <img src={imageUrl} alt="Preview" className="h-full w-full object-cover" />
+                      {mediaType === 'video' ? (
+                        <video src={mediaUrl} controls className="h-full w-full object-contain" />
+                      ) : (
+                        <img src={mediaUrl} alt="Preview" className="h-full w-full object-contain" />
+                      )}
                     </div>
                   )}
                 </div>
@@ -326,17 +378,27 @@ export default function MemoriesAlbum() {
                   boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
                 }}
               >
-                {/* Photo */}
-                <div className="relative h-48 overflow-hidden">
+                {/* Photo or Video */}
+                <div className="relative min-h-48 overflow-hidden flex items-center justify-center" style={{ background: 'rgba(26,19,37,0.3)' }}>
                   {card.image_url ? (
-                    <img
-                      src={card.image_url}
-                      alt={card.caption}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
+                    card.media_type === 'video' ? (
+                      <video
+                        src={card.image_url}
+                        controls
+                        className="w-full object-contain"
+                        style={{ maxHeight: '320px' }}
+                      />
+                    ) : (
+                      <img
+                        src={card.image_url}
+                        alt={card.caption}
+                        className="w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                        style={{ maxHeight: '320px' }}
+                      />
+                    )
                   ) : (
                     <div
-                      className="flex h-full items-center justify-center"
+                      className="flex h-48 items-center justify-center"
                       style={{ background: 'linear-gradient(135deg, rgba(82,48,110,0.3), rgba(187,42,91,0.12))' }}
                     >
                       <div className="text-center">
@@ -345,12 +407,14 @@ export default function MemoriesAlbum() {
                       </div>
                     </div>
                   )}
-                  {/* Overlay gradient */}
-                  <div
-                    className="absolute inset-0 opacity-60"
-                    style={{ background: 'linear-gradient(to top, rgba(26,19,37,0.9), transparent 60%)' }}
-                    aria-hidden="true"
-                  />
+                  {/* Overlay gradient — only for images */}
+                  {card.image_url && card.media_type !== 'video' && (
+                    <div
+                      className="absolute inset-0 opacity-60 pointer-events-none"
+                      style={{ background: 'linear-gradient(to top, rgba(26,19,37,0.9), transparent 60%)' }}
+                      aria-hidden="true"
+                    />
+                  )}
                 </div>
 
                 {/* Content */}
