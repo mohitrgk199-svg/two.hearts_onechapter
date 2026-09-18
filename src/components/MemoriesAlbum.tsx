@@ -123,11 +123,14 @@ export default function MemoriesAlbum() {
     setShowForm(false);
   };
 
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+
   const handleDelete = async (id: string) => {
     const { error: deleteError } = await supabase.from('memories').delete().eq('id', id);
     if (!deleteError) {
       setMemories((prev) => prev.filter((m) => m.id !== id));
     }
+    setDeleteConfirmId(null);
   };
 
   const allCards = memories.map((m) => ({
@@ -287,7 +290,7 @@ export default function MemoriesAlbum() {
                   {mediaUrl && (
                     <div className="mx-auto h-24 w-full max-w-[200px] overflow-hidden rounded-lg">
                       {mediaType === 'video' ? (
-                        <video src={mediaUrl} controls className="h-full w-full object-contain" />
+                        <video src={mediaUrl} controls playsInline preload="metadata" className="h-full w-full object-contain" />
                       ) : (
                         <img src={mediaUrl} alt="Preview" className="h-full w-full object-contain" />
                       )}
@@ -385,6 +388,8 @@ export default function MemoriesAlbum() {
                       <video
                         src={card.image_url}
                         controls
+                        playsInline
+                        preload="metadata"
                         className="w-full object-contain"
                         style={{ maxHeight: '320px' }}
                       />
@@ -424,9 +429,31 @@ export default function MemoriesAlbum() {
                 </div>
 
                 {/* Delete button for saved memories */}
-                {card.isSaved && (
+                {card.isSaved && deleteConfirmId === card.id && (
+                  <div
+                    className="absolute top-3 right-3 z-20 flex items-center gap-2 rounded-full px-3 py-2"
+                    style={{ background: 'rgba(26,19,37,0.95)', border: '1px solid rgba(244,63,94,0.4)' }}
+                  >
+                    <span className="font-sans text-[11px] text-white/90 whitespace-nowrap">Delete?</span>
+                    <button
+                      onClick={() => handleDelete(card.id)}
+                      className="flex h-6 w-6 items-center justify-center rounded-full text-rose-400 transition-colors hover:bg-rose-500/20"
+                      aria-label="Confirm delete"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      onClick={() => setDeleteConfirmId(null)}
+                      className="flex h-6 w-6 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/10"
+                      aria-label="Cancel delete"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                )}
+                {card.isSaved && deleteConfirmId !== card.id && (
                   <button
-                    onClick={() => handleDelete(card.id)}
+                    onClick={() => setDeleteConfirmId(card.id)}
                     className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white/60 opacity-0 transition-all hover:text-rose-400 group-hover:opacity-100"
                     aria-label="Delete memory"
                   >

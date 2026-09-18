@@ -131,6 +131,8 @@ export default function PhotoPlaceholder({
             <video
               src={mediaUrl}
               controls
+              playsInline
+              preload="metadata"
               className={`h-full w-full object-contain ${roundedClass}`}
               style={{ background: 'rgba(26,19,37,0.4)' }}
             />

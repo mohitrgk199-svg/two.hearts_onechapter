@@ -69,15 +69,31 @@
 }
 
 /* Hide Bolt watermark / badge */
- bolt-badge,
- [class*="bolt-badge"],
- [class*="bolt-watermark"],
- [id*="bolt-badge"],
- [id*="bolt-watermark"],
- a[href*="bolt.new"][target="_blank"]:not([href*="/pricing"]):not([href*="docs"]),
- div[class*="fixed"][class*="bottom"][class*="right"][class*="bolt"] {
-   display: none !important;
-   visibility: hidden !important;
-   opacity: 0 !important;
-   pointer-events: none !important;
- }
+bolt-badge,
+bolt-watermark,
+[class*="bolt-badge"],
+[class*="bolt-watermark"],
+[class*="BoltBadge"],
+[id*="bolt-badge"],
+[id*="bolt-watermark"],
+a[href*="bolt.new"][target="_blank"]:not([href*="/pricing"]):not([href*="docs"]),
+div[class*="fixed"][class*="bottom"][class*="right"][class*="bolt"],
+iframe[src*="bolt"][src*="badge"],
+iframe[src*="bolt"][src*="watermark"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Target any fixed-position small badge in bottom-right that could be the watermark */
+a[href*="bolt.new"]:not([href*="/pricing"]):not([href*="docs"]):not([href*="support"]),
+div[class*="fixed"] > a[href*="bolt.new"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
