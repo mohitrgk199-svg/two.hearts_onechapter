@@ -25,13 +25,13 @@ export default function Letter() {
 
       <Reveal>
         <h2 className="text-center font-script text-5xl sm:text-6xl text-blush-300 mb-12" style={{ textShadow: '0 0 20px rgba(255,122,166,0.4)' }}>
-          For My Angel ❤️
+          For My Angel ❤️🥰
         </h2>
       </Reveal>
 
       <Reveal delay={200} threshold={0.1}>
         <div
-          className="relative mx-auto max-w-2xl rounded-3xl p-8 sm:p-12"
+          className="relative mx-auto max-w-2xl rounded-3xl p-8 sm:p-12 overflow-hidden"
           style={{
             background: 'rgba(255,245,247,0.04)',
             backdropFilter: 'blur(20px)',
@@ -40,6 +40,19 @@ export default function Letter() {
             boxShadow: '0 8px 40px rgba(187,42,91,0.15), inset 0 1px 0 rgba(255,255,255,0.05)',
           }}
         >
+          {/* Blurred couple silhouette background */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              backgroundImage: 'url(https://images.pexels.com/photos/1024963/pexels-photo-1024963.jpeg?auto=compress&cs=tinysrgb&h=650&w=940)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              opacity: 0.15,
+              filter: 'blur(8px)',
+              transform: 'scale(1.1)',
+            }}
+            aria-hidden="true"
+          />
           {/* Letterhead ornament */}
           <div className="flex justify-center mb-6">
             <div className="flex items-center gap-2">
@@ -50,20 +63,20 @@ export default function Letter() {
           </div>
 
           <div className="font-script text-lg sm:text-xl text-white/85 leading-loose space-y-5">
-            <p>My dearest Angel,</p>
+            <p>My dearest Angel, 🥰</p>
 
             <p>
               I still remember the first time I saw you. It was the 16th of August, and the world
               was going about its business the way it always does — but I didn't know yet that the
               most important day of my life had already begun. You weren't meant to be a grand
-              moment. You were meant to be the quiet one that changed everything.
+              moment. You were meant to be the quiet one that changed everything ✨🫠
             </p>
 
             <p>
               Five days later, on the 21st, we chose each other. No long speeches, no elaborate
               plan — just two people who somehow understood that what they had found was too rare
               to let pass unnamed. And in that single decision, my entire world rearranged itself
-              around you.
+              around you 💗🥰
             </p>
 
             <p>
@@ -73,30 +86,30 @@ export default function Letter() {
               hours, silences that said more than words, disagreements that taught us patience, and
               reconciliations that taught us tenderness. Through every one of them — through the
               joy and the missing and everything between — we kept choosing each other. And that
-              choosing is the most precious thing I have ever known.
+              choosing is the most precious thing I have ever known 🤭💕🩷
             </p>
 
             <p>
               When the miles stretch between us and I can't reach across to hold your hand, I close
               my eyes and remind myself that the same moon is watching over both of us. Missing you
               is hard, but it is also proof that what we have is real — worth the ache, worth the
-              wait, worth every ordinary day until the next time I get to see you.
+              wait, worth every ordinary day until the next time I get to see you 🤧😘💗
             </p>
 
             <p>
               If I could write our future, I would fill it with slow mornings and shared laughter,
               with all the small, unglamorous moments that make a life feel like home. I don't need
               perfection. I only need you — today, tomorrow, and every ordinary, extraordinary day
-              after that.
+              after that 🥰🫠✨
             </p>
 
             <p className="text-blush-300">
               I love you, Angel. More than I knew how to say before you, and more than I'll ever
-              quite manage to put into words even now.
+              quite manage to put into words even now 💗❤️🩷🥰
             </p>
 
-            <p className="pt-2">Forever yours,</p>
-            <p className="text-blush-300 text-2xl">— your love</p>
+            <p className="pt-2">Forever yours, 🥰</p>
+            <p className="text-blush-300 text-2xl">— your love 💗💕</p>
           </div>
 
           {/* Letterhead ornament bottom */}

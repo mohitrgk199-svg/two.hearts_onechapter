@@ -139,17 +139,30 @@ export default function NightSky() {
         </Reveal>
 
         <Reveal delay={600}>
-          <div className="glass-pink rounded-2xl p-8 glow-pink">
+          <div className="glass-pink rounded-2xl p-8 glow-pink relative overflow-hidden">
+            {/* Blurred couple silhouette background */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage: 'url(https://images.pexels.com/photos/14839227/pexels-photo-14839227.jpeg?auto=compress&cs=tinysrgb&h=650&w=940)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 0.15,
+                filter: 'blur(8px)',
+                transform: 'scale(1.1)',
+              }}
+              aria-hidden="true"
+            />
             <p className="font-serif text-lg sm:text-xl text-white/85 italic leading-relaxed">
               Look at the sky for a moment. Maybe we're looking at the same moon, and even when
-              we're far apart, a little part of my heart is always with you.
+              we're far apart, a little part of my heart is always with you 🌙🥰💕
             </p>
           </div>
         </Reveal>
 
         <Reveal delay={800}>
           <p className="font-script text-2xl text-blush-300 mt-8">
-            Same sky. Same moon. Same love. 🌙
+            Same sky. Same moon. Same love. 🌙🥰💕
           </p>
         </Reveal>
       </div>

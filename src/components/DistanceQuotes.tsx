@@ -1,9 +1,15 @@
 import Reveal from './Reveal';
 
 const QUOTES = [
-  'Distance tests love in a way that being together never can; every day, you choose the same person without being able to reach them.',
-  "True love isn't about doing something reckless for someone. It is about being willing to sacrifice comfort, time, pride, and countless easy choices just to protect what you share.",
-  "Maybe our story was never meant to be easy. Maybe its meaning lies in how two people keep believing in each other when everything around them says to give up ❤️",
+  'Distance tests love in a way that being together never can; every day, you choose the same person without being able to reach them 🤧💗',
+  "True love isn't about doing something reckless for someone. It is about being willing to sacrifice comfort, time, pride, and countless easy choices just to protect what you share 🥰💕",
+  "Maybe our story was never meant to be easy. Maybe its meaning lies in how two people keep believing in each other when everything around them says to give up ❤️🫠🩷",
+];
+
+const BG_IMAGES = [
+  'https://images.pexels.com/photos/14839227/pexels-photo-14839227.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  'https://images.pexels.com/photos/6410240/pexels-photo-6410240.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  'https://images.pexels.com/photos/27254929/pexels-photo-27254929.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
 ];
 
 export default function DistanceQuotes() {
@@ -14,7 +20,7 @@ export default function DistanceQuotes() {
           Across the Distance
         </h2>
         <p className="text-center font-serif italic text-blush-200/70 text-lg mb-16">
-          What our love has taught me about being far apart
+          What our love has taught me about being far apart 🤧💗
         </p>
       </Reveal>
 
@@ -22,7 +28,7 @@ export default function DistanceQuotes() {
         {QUOTES.map((q, i) => (
           <Reveal key={i} delay={i * 200} threshold={0.15}>
             <div
-              className="relative rounded-2xl p-8 sm:p-10"
+              className="relative rounded-2xl p-8 sm:p-10 overflow-hidden"
               style={{
                 background: i === 1
                   ? 'rgba(244,63,94,0.06)'
@@ -33,6 +39,19 @@ export default function DistanceQuotes() {
                 boxShadow: '0 4px 30px rgba(0,0,0,0.15)',
               }}
             >
+              {/* Blurred couple silhouette background */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  backgroundImage: `url(${BG_IMAGES[i % BG_IMAGES.length]})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  opacity: 0.2,
+                  filter: 'blur(8px)',
+                  transform: 'scale(1.1)',
+                }}
+                aria-hidden="true"
+              />
               {/* Quote mark */}
               <span
                 className="absolute -top-3 left-6 font-serif text-6xl text-blush-400/30 select-none"
@@ -50,7 +69,7 @@ export default function DistanceQuotes() {
                 style={{ background: 'linear-gradient(to right, #ff7aa6, transparent)' }}
               />
               <p className="mt-3 font-sans text-xs text-blush-300/50 tracking-wide">
-                — for my Angel, across every mile
+                — for my Angel, across every mile 🥰💕
               </p>
             </div>
           </Reveal>

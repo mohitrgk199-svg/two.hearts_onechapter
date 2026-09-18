@@ -144,12 +144,15 @@ export default function PhotoPlaceholder({
             />
           )}
           {/* Hover overlay with change + remove buttons */}
+          {/* pointer-events: none on wrapper so clicks pass through to video controls;
+              buttons re-enable pointer-events: auto so they still work on hover */}
           <div
             className={`absolute inset-0 flex items-center justify-center gap-3 ${roundedClass} opacity-0 transition-opacity duration-300 group-hover/photo:opacity-100`}
-            style={{ background: 'rgba(26,19,37,0.55)' }}
+            style={{ background: mediaType === 'video' ? 'rgba(26,19,37,0.55)' : 'rgba(26,19,37,0.55)', pointerEvents: 'none' }}
           >
             <button
               type="button"
+              style={{ background: 'rgba(255,122,166,0.3)', border: '1px solid rgba(255,169,192,0.3)', pointerEvents: 'auto' }}
               onClick={(e) => {
                 e.stopPropagation();
                 if (allowVideo) {
@@ -159,7 +162,6 @@ export default function PhotoPlaceholder({
                 }
               }}
               className="flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-sans text-white transition-colors"
-              style={{ background: 'rgba(255,122,166,0.3)', border: '1px solid rgba(255,169,192,0.3)' }}
               aria-label="Change media"
             >
               <Camera className="h-3.5 w-3.5" />
@@ -167,12 +169,12 @@ export default function PhotoPlaceholder({
             </button>
             <button
               type="button"
+              style={{ background: 'rgba(244,63,94,0.3)', border: '1px solid rgba(244,63,94,0.3)', pointerEvents: 'auto' }}
               onClick={(e) => {
                 e.stopPropagation();
                 clearMedia();
               }}
               className="flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-sans text-white transition-colors"
-              style={{ background: 'rgba(244,63,94,0.3)', border: '1px solid rgba(244,63,94,0.3)' }}
               aria-label="Remove media"
             >
               <X className="h-3.5 w-3.5" />

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 const SEQUENCE = [
-  { text: 'If our story were a book…', delay: 500 },
-  { text: "I'd still choose you as my favourite chapter.", delay: 3500 },
-  { text: "And I'd never want the story to end.", delay: 7000 },
+  { text: 'If our story were a book… 📖✨', delay: 500 },
+  { text: "I'd still choose you as my favourite chapter. 🥰💕", delay: 3500 },
+  { text: "And I'd never want the story to end. 💗❤️", delay: 7000 },
 ];
 
 export default function FinalPage() {
@@ -119,7 +119,7 @@ export default function FinalPage() {
             <h1
               className="font-serif text-4xl sm:text-6xl font-medium text-shimmer glow-text mt-8"
             >
-              I LOVE YOU, ANGEL ❤️
+              I LOVE YOU, ANGEL ❤️🥰💕
             </h1>
           </div>
         )}
@@ -131,10 +131,10 @@ export default function FinalPage() {
             style={{ animation: 'fadeInUp 1.5s ease forwards' }}
           >
             <p className="font-script text-xl text-blush-300">
-              16 August 2025 — The beginning of our story
+              16 August 2025 — The beginning of our story ✨
             </p>
             <p className="font-script text-xl text-blush-300">
-              21 August 2025 — The day we became us
+              21 August 2025 — The day we became us 💗🥰
             </p>
           </div>
         )}

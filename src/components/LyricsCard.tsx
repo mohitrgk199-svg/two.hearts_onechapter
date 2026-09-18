@@ -15,6 +15,19 @@ export default function LyricsCard() {
               boxShadow: '0 8px 40px rgba(187,42,91,0.12)',
             }}
           >
+            {/* Blurred couple silhouette background */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage: 'url(https://images.pexels.com/photos/10099212/pexels-photo-10099212.jpeg?auto=compress&cs=tinysrgb&h=650&w=940)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 0.18,
+                filter: 'blur(8px)',
+                transform: 'scale(1.1)',
+              }}
+              aria-hidden="true"
+            />
             {/* Floating hearts decoration */}
             <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
               {Array.from({ length: 6 }).map((_, i) => (
@@ -46,18 +59,18 @@ export default function LyricsCard() {
               </div>
 
               <p className="font-script text-base text-blush-300/60 mb-6">
-                Pal — Arijit Singh & Shreya Ghoshal
+                Pal — Arijit Singh & Shreya Ghoshal 🎶🥰
               </p>
 
               <div className="space-y-3">
                 <p className="font-serif text-xl sm:text-2xl text-white/90 italic leading-relaxed">
-                  Har lamha baahon mein teri ho,
+                  Har lamha baahon mein teri ho, 🥰
                 </p>
                 <p className="font-serif text-xl sm:text-2xl text-white/90 italic leading-relaxed">
-                  palkon mein tu ho, saansom mein tu...
+                  palkon mein tu ho, saansom mein tu... 💗
                 </p>
                 <p className="font-serif text-xl sm:text-2xl text-blush-200 italic leading-relaxed glow-text">
-                  Pal bhar thahar jaao, dil ko sukoon mile.
+                  Pal bhar thahar jaao, dil ko sukoon mile 🩷✨
                 </p>
               </div>
 

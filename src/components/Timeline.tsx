@@ -58,7 +58,7 @@ export default function Timeline() {
           Our Timeline
         </h2>
         <p className="text-center font-serif italic text-blush-200/70 text-lg mb-16">
-          Every day with you is a page worth remembering
+          Every day with you is a page worth remembering 🥰✨
         </p>
       </Reveal>
 
@@ -141,7 +141,7 @@ export default function Timeline() {
                 </div>
               ))}
             </div>
-            <p className="font-script text-xl text-blush-300 mt-5">and still counting ❤️</p>
+            <p className="font-script text-xl text-blush-300 mt-5">and still counting ❤️🥰💕</p>
           </div>
         </div>
       </Reveal>
