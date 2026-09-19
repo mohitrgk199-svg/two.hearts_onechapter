@@ -15,6 +15,7 @@ import MemoriesAlbum from '@/components/MemoriesAlbum';
 import FinalPage from '@/components/FinalPage';
 import SecretHeart from '@/components/SecretHeart';
 import MusicToggle from '@/components/MusicToggle';
+import FloatingEmojis from '@/components/FloatingEmojis';
 
 export default function App() {
   const [unlocked, setUnlocked] = useState(false);
@@ -43,6 +44,9 @@ export default function App() {
 
       {/* Continuous heart animation across the whole site */}
       {opened && <HeartField count={14} seed={77} />}
+
+      {/* Floating romantic emojis across the full screen */}
+      {opened && <FloatingEmojis count={18} />}
 
       {/* Main content */}
       {opened && (
