@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { Camera, X, Video, Image as ImageIcon } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+import { Camera, X, Video, Image as ImageIcon, MoreVertical } from 'lucide-react';
 import { useCardMedia } from '@/hooks/useCardMedia';
 
 type PhotoPlaceholderProps = {
@@ -41,7 +41,20 @@ export default function PhotoPlaceholder({
   } = useCardMedia(cardId);
 
   const [showMediaMenu, setShowMediaMenu] = useState(false);
+  const [showOptionsMenu, setShowOptionsMenu] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Close options menu when clicking outside
+  useEffect(() => {
+    if (!showOptionsMenu) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        setShowOptionsMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showOptionsMenu]);
 
   const handleBoxClick = () => {
     if (mediaUrl) return; // don't open picker when media already exists
@@ -143,43 +156,65 @@ export default function PhotoPlaceholder({
               className={`h-full w-full object-contain ${roundedClass}`}
             />
           )}
-          {/* Hover overlay with change + remove buttons */}
-          {/* pointer-events: none on wrapper so clicks pass through to video controls;
-              buttons re-enable pointer-events: auto so they still work on hover */}
-          <div
-            className={`absolute inset-0 flex items-center justify-center gap-3 ${roundedClass} opacity-0 transition-opacity duration-300 group-hover/photo:opacity-100`}
-            style={{ background: mediaType === 'video' ? 'rgba(26,19,37,0.55)' : 'rgba(26,19,37,0.55)', pointerEvents: 'none' }}
-          >
+
+          {/* 3-dot options menu (top-right corner) */}
+          <div className="absolute top-2 right-2 z-30" style={{ pointerEvents: 'auto' }}>
             <button
               type="button"
-              style={{ background: 'rgba(255,122,166,0.3)', border: '1px solid rgba(255,169,192,0.3)', pointerEvents: 'auto' }}
               onClick={(e) => {
                 e.stopPropagation();
-                if (allowVideo) {
-                  setShowMediaMenu(true);
-                } else {
-                  pickImage();
-                }
+                setShowOptionsMenu((v) => !v);
               }}
-              className="flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-sans text-white transition-colors"
-              aria-label="Change media"
+              className="flex h-7 w-7 items-center justify-center rounded-full text-white/70 transition-all hover:text-white hover:bg-black/40"
+              style={{ background: 'rgba(26,19,37,0.6)', backdropFilter: 'blur(4px)' }}
+              aria-label="More options"
             >
-              <Camera className="h-3.5 w-3.5" />
-              Change
+              <MoreVertical className="h-4 w-4" />
             </button>
-            <button
-              type="button"
-              style={{ background: 'rgba(244,63,94,0.3)', border: '1px solid rgba(244,63,94,0.3)', pointerEvents: 'auto' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                clearMedia();
-              }}
-              className="flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-sans text-white transition-colors"
-              aria-label="Remove media"
-            >
-              <X className="h-3.5 w-3.5" />
-              Remove
-            </button>
+
+            {showOptionsMenu && (
+              <div
+                className="absolute top-8 right-0 rounded-xl overflow-hidden"
+                style={{
+                  background: 'rgba(42,26,61,0.97)',
+                  backdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(255,169,192,0.25)',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+                  minWidth: '160px',
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowOptionsMenu(false);
+                    if (allowVideo) {
+                      setShowMediaMenu(true);
+                    } else {
+                      pickImage();
+                    }
+                  }}
+                  className="flex w-full items-center gap-2.5 px-4 py-2.5 text-xs font-sans text-white/90 transition-colors hover:bg-blush-500/15 text-left"
+                >
+                  <Camera className="h-3.5 w-3.5 text-blush-300" />
+                  Change {mediaType === 'video' ? 'Video' : 'Photo'}
+                </button>
+                <div style={{ height: '1px', background: 'rgba(255,169,192,0.12)' }} />
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowOptionsMenu(false);
+                    clearMedia();
+                  }}
+                  className="flex w-full items-center gap-2.5 px-4 py-2.5 text-xs font-sans text-rose-300/90 transition-colors hover:bg-rose-500/15 text-left"
+                >
+                  <X className="h-3.5 w-3.5" />
+                  Remove
+                </button>
+              </div>
+            )}
           </div>
         </>
       ) : (

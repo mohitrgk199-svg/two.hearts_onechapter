@@ -123,7 +123,7 @@ export default function OpeningScreen({ onOpen }: OpeningScreenProps) {
             className="text-5xl sm:text-6xl inline-block"
             style={{ animation: 'breathe 2s ease-in-out infinite', filter: 'drop-shadow(0 0 12px rgba(255,122,166,0.6))' }}
           >
-            💋
+            😚😚
           </span>
         </div>
 
