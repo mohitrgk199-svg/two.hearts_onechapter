@@ -117,20 +117,11 @@ export default function NightSky() {
             showMoon ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
           }`}
         >
-          <div
-            className="h-32 w-32 sm:h-40 sm:w-40 rounded-full overflow-hidden relative"
-            style={{
-              boxShadow: '0 0 35px rgba(255, 255, 255, 0.6), 0 0 70px rgba(255, 255, 255, 0.25)',
-              animation: 'breathe 5s ease-in-out infinite',
-            }}
-          >
-            <img
-              src="https://images.pexels.com/photos/7298123/pexels-photo-7298123.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
-              alt="Glowing full moon"
-              className="h-full w-full object-cover rounded-full"
-              style={{ display: 'block' }}
-            />
-          </div>
+          <img
+            src="https://images.unsplash.com/photo-1532693322450-2cb5c511067d?auto=format&fit=crop&w=600&q=80"
+            alt="Glowing full moon"
+            className="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover shadow-[0_0_50px_rgba(255,255,255,0.8)] mx-auto animate-pulse"
+          />
         </div>
 
         <Reveal delay={400}>
