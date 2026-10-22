@@ -42,7 +42,7 @@ export default function OpeningScreen({ onOpen }: OpeningScreenProps) {
       }`}
       style={{
         background:
-          'radial-gradient(ellipse at 30% 20%, #52306e 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, #bb2a5b 0%, transparent 50%), linear-gradient(135deg, #2a1a3d 0%, #3d2456 40%, #1a1325 100%)',
+          'radial-gradient(ellipse at 30% 20%, #52306e 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, #bb2a5b 0%, transparent 50%), #050508',
       }}
     >
       <StarField count={80} />

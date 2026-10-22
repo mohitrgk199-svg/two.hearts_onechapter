@@ -42,8 +42,7 @@ export default function FinalPage() {
       ref={sectionRef}
       className="relative min-h-screen flex flex-col items-center justify-center px-5 py-32 overflow-hidden"
       style={{
-        background:
-          'radial-gradient(ellipse at center, #3d2456 0%, #2a1a3d 40%, #1a1325 100%)',
+        background: '#050508',
       }}
     >
       {/* Fading ambient glow */}

@@ -30,8 +30,7 @@ export default function App() {
     <div
       className="relative min-h-screen w-full overflow-x-hidden"
       style={{
-        background:
-          'linear-gradient(180deg, #1a1325 0%, #2a1a3d 20%, #3d2456 40%, #2a1a3d 70%, #1a1325 100%)',
+        background: '#050508',
       }}
     >
       {/* Stage 1: Password Gateway */}

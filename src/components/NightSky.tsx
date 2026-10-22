@@ -64,8 +64,7 @@ export default function NightSky() {
       }}
       className="relative py-24 px-5 overflow-hidden"
       style={{
-        background:
-          'radial-gradient(ellipse at 50% 100%, #2a1a3d 0%, transparent 70%), linear-gradient(180deg, #1a1325 0%, #241a33 50%, #1a1325 100%)',
+        background: '#050508',
       }}
     >
       {/* Stars */}
@@ -120,7 +119,7 @@ export default function NightSky() {
           <img
             src="https://images.unsplash.com/photo-1532693322450-2cb5c511067d?auto=format&fit=crop&w=600&q=80"
             alt="Glowing full moon"
-            className="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover shadow-[0_0_50px_rgba(255,255,255,0.8)] mx-auto animate-pulse"
+            className="w-44 h-44 md:w-52 md:h-52 rounded-full object-cover shadow-[0_0_60px_rgba(255,255,255,0.85)] mx-auto animate-pulse"
           />
         </div>
 
