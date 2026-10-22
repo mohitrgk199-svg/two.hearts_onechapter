@@ -5,6 +5,7 @@ import HeartField from '@/components/HeartField';
 import Timeline from '@/components/Timeline';
 import BraceletCard from '@/components/BraceletCard';
 import DressCard from '@/components/DressCard';
+import GiftsCard from '@/components/GiftsCard';
 import Quotes from '@/components/Quotes';
 import LyricsCard from '@/components/LyricsCard';
 import Letter from '@/components/Letter';
@@ -54,6 +55,7 @@ export default function App() {
           <Timeline />
           <BraceletCard />
           <DressCard />
+          <GiftsCard />
           <Quotes />
           <LyricsCard />
           <Letter />

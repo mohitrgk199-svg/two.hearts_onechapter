@@ -5,31 +5,52 @@ type MusicToggleProps = {
   autoPlay: boolean;
 };
 
-// Reliable royalty-free instrumental from SoundHelix (CORS-friendly CDN)
-const AUDIO_SRC = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
-const VOLUME = 0.35; // 35% — soft background level
+// Multiple reliable, CORS-friendly instrumental audio sources (tried in order)
+const AUDIO_SOURCES = [
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+];
+const VOLUME = 0.32; // 32% — soft comfortable background level
 
 export default function MusicToggle({ autoPlay }: MusicToggleProps) {
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
   const [loading, setLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const sourceIdxRef = useRef(0);
 
   // Initialize audio element on mount
   useEffect(() => {
     const audio = new Audio();
-    audio.src = AUDIO_SRC;
+    audio.src = AUDIO_SOURCES[0];
     audio.loop = true;
     audio.volume = VOLUME;
     audio.preload = 'auto';
-    audio.crossOrigin = 'anonymous';
     audioRef.current = audio;
 
+    // When a source errors, try the next one
+    const handleError = () => {
+      const next = sourceIdxRef.current + 1;
+      if (next < AUDIO_SOURCES.length) {
+        sourceIdxRef.current = next;
+        audio.src = AUDIO_SOURCES[next];
+        audio.load();
+        // If we were trying to play, retry
+        if (loading || playing) {
+          audio.play().catch(() => {});
+        }
+      }
+    };
+    audio.addEventListener('error', handleError);
+
     return () => {
+      audio.removeEventListener('error', handleError);
       audio.pause();
       audio.src = '';
       audioRef.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startMusic = async () => {
@@ -42,7 +63,8 @@ export default function MusicToggle({ autoPlay }: MusicToggleProps) {
       setStarted(true);
       setPlaying(true);
     } catch {
-      // Autoplay blocked or network error — user can retry
+      // Autoplay blocked or network error — user can retry via toggle
+      setPlaying(false);
     } finally {
       setLoading(false);
     }
@@ -62,6 +84,7 @@ export default function MusicToggle({ autoPlay }: MusicToggleProps) {
       const timer = setTimeout(() => startMusic(), 600);
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlay, started]);
 
   const toggle = () => {

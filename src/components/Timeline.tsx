@@ -14,7 +14,26 @@ function useTimeSince(start: Date) {
   const hours = Math.floor((diff % 86400000) / 3600000);
   const minutes = Math.floor((diff % 3600000) / 60000);
   const seconds = Math.floor((diff % 60000) / 1000);
-  return { days, hours, minutes, seconds };
+  return { days, hours, minutes, seconds, now };
+}
+
+// Break a duration into years, months, and remaining days using calendar math
+function breakdownYMD(start: Date, end: Date) {
+  let years = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+  let remDays = end.getDate() - start.getDate();
+
+  if (remDays < 0) {
+    months -= 1;
+    // Days in the month just before `end`
+    const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+    remDays += prevMonth.getDate();
+  }
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+  return { years, months, days: remDays };
 }
 
 const TIMELINE_ITEMS = [
@@ -39,7 +58,8 @@ const TIMELINE_ITEMS = [
 ];
 
 export default function Timeline() {
-  const { days, hours, minutes, seconds } = useTimeSince(RELATIONSHIP_START);
+  const { days, hours, minutes, seconds, now } = useTimeSince(RELATIONSHIP_START);
+  const ymd = breakdownYMD(RELATIONSHIP_START, now);
 
   const counterUnits = useMemo(
     () => [
@@ -142,6 +162,12 @@ export default function Timeline() {
               ))}
             </div>
             <p className="font-script text-xl text-blush-300 mt-5">and still counting ❤️🥰💕</p>
+
+            {/* Years / Months / Days breakdown */}
+            <p className="font-serif text-base sm:text-lg text-blush-200/90 italic mt-3">
+              {ymd.years > 0 && `${ymd.years} Year${ymd.years > 1 ? 's' : ''}, `}
+              {ymd.months} Month{ymd.months !== 1 ? 's' : ''}, {ymd.days} Day{ymd.days !== 1 ? 's' : ''} • and still counting 💖
+            </p>
           </div>
         </div>
       </Reveal>
