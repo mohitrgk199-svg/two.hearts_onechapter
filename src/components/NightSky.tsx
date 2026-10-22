@@ -118,17 +118,18 @@ export default function NightSky() {
           }`}
         >
           <div
-            className="h-32 w-32 sm:h-40 sm:w-40 rounded-full"
+            className="h-32 w-32 sm:h-40 sm:w-40 rounded-full overflow-hidden relative"
             style={{
-              background: 'radial-gradient(circle at 35% 35%, #fff5f7 0%, #ffc9db 50%, #ff7aa6 100%)',
-              boxShadow: '0 0 40px rgba(255,201,219,0.4), 0 0 80px rgba(255,122,166,0.2)',
+              boxShadow: '0 0 35px rgba(255, 255, 255, 0.6), 0 0 70px rgba(255, 255, 255, 0.25)',
               animation: 'breathe 5s ease-in-out infinite',
             }}
           >
-            {/* Moon craters */}
-            <div className="absolute top-6 left-8 h-3 w-3 rounded-full bg-blush-300/30" />
-            <div className="absolute top-12 right-6 h-2 w-2 rounded-full bg-blush-300/30" />
-            <div className="absolute bottom-8 left-10 h-2.5 w-2.5 rounded-full bg-blush-300/25" />
+            <img
+              src="https://images.pexels.com/photos/7298123/pexels-photo-7298123.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+              alt="Glowing full moon"
+              className="h-full w-full object-cover rounded-full"
+              style={{ display: 'block' }}
+            />
           </div>
         </div>
 
